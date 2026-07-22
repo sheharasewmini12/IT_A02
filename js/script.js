@@ -169,3 +169,135 @@ window.onclick = (e) => {
     }
 
 }
+
+/*=========================================
+        GITHUB API
+=========================================*/
+
+const repoContainer = document.getElementById("repo-container");
+
+fetch("https://api.github.com/users/sheharasewmini12/repos?sort=updated")
+.then(response => response.json())
+.then(repos => {
+
+    repoContainer.innerHTML = "";
+
+    repos.slice(0,6).forEach(repo => {
+
+        repoContainer.innerHTML += `
+
+        <div class="skill-card">
+
+            <h3>${repo.name}</h3>
+
+            <p>${repo.description || "No description available."}</p>
+
+            <p>⭐ ${repo.stargazers_count}</p>
+
+            <a href="${repo.html_url}"
+               target="_blank"
+               class="btn">
+
+                View Repository
+
+            </a>
+
+        </div>
+
+        `;
+
+    });
+
+})
+.catch(() => {
+
+    repoContainer.innerHTML =
+    "<p>Unable to load GitHub repositories.</p>";
+
+});
+
+/*=========================================
+        CONTACT FORM
+=========================================*/
+
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    alert("Thank you! Your message has been received.");
+
+    contactForm.reset();
+
+});
+
+/*=========================================
+        SCROLL REVEAL
+=========================================*/
+
+const observer = new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+},{threshold:.2});
+
+document.querySelectorAll("section").forEach(section=>{
+
+    observer.observe(section);
+
+});
+
+/*=========================================
+        TYPING EFFECT
+=========================================*/
+
+const subtitle = document.querySelector(".hero-content h2");
+
+const words = [
+
+    "Software Engineering Student",
+
+    "Java Developer",
+
+    "Web Developer",
+
+    "Frontend Designer"
+
+];
+
+let wordIndex = 0;
+
+function typingEffect(){
+
+    subtitle.textContent = words[wordIndex];
+
+    wordIndex++;
+
+    if(wordIndex >= words.length){
+
+        wordIndex = 0;
+
+    }
+
+}
+
+setInterval(typingEffect,2500);
+
+/*=========================================
+        LOADING COMPLETE
+=========================================*/
+
+window.addEventListener("load",()=>{
+
+    document.body.classList.add("loaded");
+
+});
